@@ -1,0 +1,30 @@
+---
+
+- name: Check for existing Docker Compose file
+  stat:
+    path: "/usr/local/bin/docker-compose"
+  register: docker_compose_stat
+
+- name: Remove Docker Compose if it's been installed without PIP
+  file:
+    path: "/usr/local/bin/docker-compose"
+    state: "absent"
+  when:
+    - "docker_compose_stat.stat.exists"
+    - "docker_compose_stat.stat.islnk == False"
+
+- name: "Install Compose with Pip"
+  pip:
+    name: "docker-compose"
+    virtualenv: "{{ docker_pip_virtualenv }}"
+    state: "present"
+
+- name: "Symlink Compose Python package binary to /usr/local/bin"
+  file:
+    path: "/usr/local/bin/docker-compose"
+    src: "{{ docker_pip_virtualenv + '/bin/docker-compose' }}"
+    state: "link"
+    
+
+
+

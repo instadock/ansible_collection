@@ -1,0 +1,13 @@
+namespace: "instadock"
+name: "instadock"
+version: "0.1.0"
+readme: "README.md"
+dependencies:
+license:
+    - "MIT"
+tags:
+    - collection
+repository: "https://www.github.com/instadock/ansible_collection"
+documentation: "http://www.github.com/instadock/ansible_collection"
+homepage: "http://www.github.com/instadock/ansible_collection"
+issues: "https://www.github.com/instadock/ansible_collection/issues"

@@ -1,0 +1,4 @@
+---
+docker_compose_version: ""
+docker_pip_virtualenv: "/usr/local/lib/docker/virtualenv"
+
