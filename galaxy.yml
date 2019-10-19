@@ -4,7 +4,8 @@ version: "0.1.0"
 readme: "README.md"
 authors:
   - "InstaDock Authors (https://www.github.com/instadock/ansible_collection)"
-dependencies:
+description: "Ansible roles used by instadock project for installing Docker"
+dependencies: {}
 license:
   - "MIT"
 tags:
