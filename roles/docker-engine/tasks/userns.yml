@@ -1,5 +1,10 @@
 ---
 # create userns user, subuid, and subgid entries if needed
+- name: 'Add userns group'
+  group:
+    name: "{{docker_userns_group}}"
+  when: "docker_userns_group != false"
+
 - name: 'Add userns user'
   user:
     name: "{{docker_userns_user}}"
