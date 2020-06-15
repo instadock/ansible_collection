@@ -3,13 +3,13 @@
 - name: "Distribution specific Docker install"
   include_tasks: "{{ ansible_pkg_mgr }}.yml"
 
+- name: "Configure userns"
+  include_tasks: "userns.yml"
+  when: "docker_userns_enabled"
+
 - name: "Common docker post-install setup"
   include_tasks: "common.yml"
 
 - name: "Configure sysctl"
   include_tasks: "sysctl.yml"
-
-- name: "Configure userns"
-  include_tasks: "userns.yml"
-  when: "docker_userns_enabled"
 
