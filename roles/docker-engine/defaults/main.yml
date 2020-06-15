@@ -11,6 +11,7 @@ docker_repo_key_id: "{% if docker_release == 'ce' %}0EBFCD88{% elif docker_relea
 # docker_vesion_search: 18.09
 # set to true to allow beta, rc, and tp releases in version search
 docker_allow_rc: false
+docker_version_lock: false # this should be enabled in swarm environments
 docker_log_driver: json-file
 docker_log_opts: >
   {
@@ -22,4 +23,11 @@ docker_users:
   - "{{ansible_env.SUDO_USER}}"
 docker_daemon_labels:
   - "from_ansible=true"
+docker_feature_buildkit: true
+docker_userns_enabled: false
+docker_userns_remap: "default"
+docker_userns_user: false
+docker_userns_subuid: false
+docker_userns_group: false
+docker_userns_subgid: false
 

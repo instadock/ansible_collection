@@ -17,6 +17,7 @@
   pip:
     name: "docker-compose"
     virtualenv: "{{ docker_pip_virtualenv }}"
+    virtualenv_command: "pyvenv" # force python v3
     state: "present"
 
 - name: "Symlink Compose Python package binary to /usr/local/bin"

@@ -1,6 +1,6 @@
 ---
-- name: Upgrade all packages to the latest version
-  yum:
+- name: 'Upgrade all packages to the latest version'
+  dnf:
     name: '*'
     state: latest
   when: upgrade_os
@@ -13,13 +13,13 @@
   when: selinux_mode is defined
 
 - name: 'Enable EPEL repository'
-  yum:
+  dnf:
     state: present
     name:
       - https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ansible_distribution_major_version}}.noarch.rpm
 
-- name: 'Yum Packages'
-  yum:
+- name: 'DNF Packages'
+  dnf:
     state: present
     name:
       - bash-completion # optional
@@ -32,11 +32,10 @@
       - openssh-clients
       - openssh-server
       - openssl
-      - python-setuptools
-      - python-virtualenv # TODO: try to remove
+      - python3-setuptools
       - python3
       - python3-pip
-      - python36-virtualenv
+      - python3-virtualenv
       - sudo
       - tmux # optional
       - unzip
@@ -46,7 +45,7 @@
       - yum-utils
 
 - name: 'RHEL Specific Packages'
-  yum:
+  dnf:
     state: present
     name:
       # chrony needed since systemd-timesyncd is removed from RHEL systemd
@@ -61,5 +60,5 @@
 
 - name: 'Reboot'
   reboot:
-  when: reboot_allowed and reboot_required_shell.rc != 0 or (selinux_result.reboot_required | default(false))
+  when: reboot_allowed and ( reboot_required_shell.rc != 0 or ( selinux_result.reboot_required is defined and selinux_result.reboot_required ) )
 

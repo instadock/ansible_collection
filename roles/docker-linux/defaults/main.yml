@@ -1,3 +1,7 @@
 ---
-selinux_mode: permissive
+# permissive, enforcing, leave undefined to skip
+# selinux_mode: permissive
+
+upgrade_os: false
+reboot_allowed: true
 

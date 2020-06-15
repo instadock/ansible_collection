@@ -1,0 +1,24 @@
+---
+# create userns user, subuid, and subgid entries if needed
+- name: 'Add userns user'
+  user:
+    name: "{{docker_userns_user}}"
+    group: "{% if docker_userns_group != false %}{{docker_userns_group}}{% else %}{{docker_userns_user}}{% endif %}"
+  when: "docker_userns_user != false"
+
+- name: 'Add userns subuid'
+  lineinfile:
+    path: "/etc/subuid"
+    regexp: "^{{ docker_userns_user }}:"
+    line: "{{ docker_userns_user }}:{{ docker_userns_subuid }}:65536"
+  when: "docker_userns_user != false and docker_userns_subuid != false"
+
+- name: 'Add userns subgid'
+  lineinfile:
+    path: "/etc/subgid"
+    regexp: "^{{ docker_userns_group }}:"
+    line: "{{ docker_userns_group }}:{{ docker_userns_subgid }}:65536"
+  when: "docker_userns_group != false and docker_userns_subgid != false"
+
+
+

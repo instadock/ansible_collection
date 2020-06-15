@@ -1,11 +1,18 @@
 {
-  {%- if docker_daemon_json_custom is defined -%}
-  {{ docker_daemon_json_custom | indent(2) }}
-  {%- endif -%}
   "experimental": {{ docker_daemon_json_experimental | d('false') }},
+  "features": {"buildkit": {{ docker_feature_buildkit | d(true) | to_json() }} },
   "hosts": {{ docker_daemon_json_hosts | d('["unix:///var/run/docker.sock"]') }},
-  "labels": {{ docker_daemon_labels | to_json() }},
+  "labels": {{ docker_daemon_labels | d([]) | to_json() }},
   "log-driver": "{{ docker_log_driver | d('json-file') }}",
   "log-opts": {{ docker_log_opts | d("{}") | trim() | indent(2) }},
   "storage-driver": "overlay2"
+
+  {%- if docker_userns_enabled %},
+  "userns-remap": "{{ docker_userns_remap | d("default") }}"
+  {%- endif %}
+
+  {%- if docker_daemon_json_custom is defined %},
+{{ docker_daemon_json_custom | indent(2) }}
+  {%- endif %}
+
 }

@@ -9,3 +9,7 @@
 - name: "Configure sysctl"
   include_tasks: "sysctl.yml"
 
+- name: "Configure userns"
+  include_tasks: "userns.yml"
+  when: "docker_userns_enabled"
+

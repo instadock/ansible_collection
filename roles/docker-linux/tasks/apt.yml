@@ -9,6 +9,7 @@
   apt: 
     upgrade: dist
     force_apt_get: true
+  when: upgrade_os
 
 - name: 'Apt Packages'
   apt:
@@ -16,7 +17,7 @@
     force_apt_get: true
     name:
       - apt-transport-https
-      - bash-completion
+      - bash-completion # optional
       - ca-certificates
       - curl
       - git
@@ -32,12 +33,13 @@
       - python3
       - python3-pip
       - python3-setuptools
+      - python3-venv
       - python3-virtualenv
       - software-properties-common
       - sudo
-      - tmux
+      - tmux # optional
       - unzip
-      - vim
+      - vim # optional
       - virtualenv
       - wget
 
@@ -53,5 +55,5 @@
 #    groups: reboot_needed
 - name: 'Reboot'
   reboot:
-  when: reboot_required.stat.exists == True
+  when: reboot_allowed and reboot_required.stat.exists == True
 

@@ -1,6 +1,6 @@
 ---
 - name: 'Remove old packages'
-  yum:
+  dnf:
     state: absent
     name:
       - docker
@@ -15,7 +15,7 @@
 
 # uninstall docker-ce and docker-ce-cli if installing docker-ee
 - name: 'Remove old packages'
-  yum:
+  dnf:
     state: absent
     name:
       - docker-ce
@@ -27,12 +27,13 @@
     key: "{{ docker_repo_url }}/{{ansible_distribution | lower}}/gpg"
     state: present
 
-- name: 'Add Docker Yum Repo'
+- name: 'Add Docker Repo'
   yum_repository:
     name: "docker-{{ docker_edition }}"
     description: "Docker {{ docker_edition | upper }} repo"
     file: "docker-{{ docker_edition }}"
-    baseurl: "{{ docker_repo_url }}/{{ ansible_distribution | lower}}/$releasever/$basearch/{{ docker_release }}"
+    baseurl: "{{ docker_repo_url }}/{{ ansible_distribution | lower}}/{% if ansible_distribution_major_version|int >= 8 %}7{% else %}$releasever{% endif %}/$basearch/{{ docker_release }}"
+    # baseurl: "{{ docker_repo_url }}/{{ ansible_distribution | lower}}/$releasever/$basearch/{{ docker_release }}"
 
 - name: 'Remove version lock on docker'
   command: >
@@ -63,7 +64,7 @@
   when: "docker_version_search is defined"
 
 - name: 'Install Docker Package'
-  yum:
+  dnf:
     state: present
     allow_downgrade: true
     name:

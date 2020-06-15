@@ -47,6 +47,3 @@
     append: yes
   loop: "{{docker_users}}"
     
-
-
-

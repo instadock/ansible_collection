@@ -73,5 +73,6 @@
   command: >
     apt-mark hold docker-{{ docker_edition }}
   changed_when: false
+  when: docker_version_lock
 
 
